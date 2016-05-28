@@ -1,11 +1,14 @@
 package com.sasi.wearabletest;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.RemoteInput;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Toast;
 
 public class ScrollingActivity extends AppCompatActivity {
 
@@ -24,5 +27,19 @@ public class ScrollingActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+        getWearReplyText(getIntent());
+    }
+
+    private CharSequence getWearReplyText(Intent intent) {
+
+        Bundle remoteInput = RemoteInput.getResultsFromIntent(intent);
+
+        if (remoteInput != null) {
+
+            Toast.makeText(this, "REPLY: " + remoteInput.getCharSequence(MainActivity.EXTRA_VOICE_REPLY_KEY), Toast.LENGTH_SHORT).show();
+        }
+
+        return "";
     }
 }
