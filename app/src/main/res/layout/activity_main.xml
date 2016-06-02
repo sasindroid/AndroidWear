@@ -80,5 +80,17 @@
             android:layout_height="wrap_content"
             android:onClick="notifyStackGroupSummary"
             android:text="Group Summary on device"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="startAlarm"
+            android:text="Start Timely Notifications"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="stopAlarm"
+            android:text="Stop Timely Notifications"/>
     </LinearLayout>
 </ScrollView>

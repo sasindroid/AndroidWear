@@ -1,5 +1,6 @@
 package com.sasi.wearabletest;
 
+import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.Intent;
@@ -7,6 +8,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.app.RemoteInput;
@@ -25,6 +27,9 @@ public class MainActivity extends AppCompatActivity {
     String mGroupKey = "GROUP1";
     int mNotificationID2 = 0;
     String mGroupKey2 = "GROUP2";
+    AlarmManager alarmManager;
+    Intent alarmIntent;
+    PendingIntent pendingIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -420,6 +425,29 @@ public class MainActivity extends AppCompatActivity {
         NotificationManagerCompat managerCompat = NotificationManagerCompat.from(this);
 
         managerCompat.notify(mNotificationID2, summaryNotification);
+    }
+
+    public void startAlarm(View view) {
+
+        alarmManager = (AlarmManager) this.getSystemService(this.ALARM_SERVICE);
+        alarmIntent = new Intent(this, AlarmService.class);
+        pendingIntent = PendingIntent.getService(this, 20, alarmIntent, 0);
+
+        int alarmType = AlarmManager.ELAPSED_REALTIME;
+        final int FIFTEEN_SEC_MILLIS = 15000;
+        final int TWO_SEC_MILLIS = 200;
+
+        alarmManager.setRepeating(alarmType, SystemClock.elapsedRealtime() + TWO_SEC_MILLIS,
+                TWO_SEC_MILLIS, pendingIntent);
+    }
+
+    public void stopAlarm(View view) {
+
+        if (alarmManager != null) {
+
+            alarmManager.cancel(pendingIntent);
+        }
+
     }
 
 }
